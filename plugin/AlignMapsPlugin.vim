@@ -69,7 +69,7 @@ nnoremap <silent> <script> <Plug>AlignMapsWrapperEnd	:call AlignMaps#WrapperEnd(
 " s:MakeMap: make both a normal-mode and a visual mode map for mapname {{{2
 fun! s:MakeMap(mapname,...)
 
-  if !exists("s:mapleader")
+  if !exists("g:Align_mapleader")
    if exists("g:maplocalleader")
     let maplead= g:maplocalleader
    elseif exists("g:mapleader")
@@ -77,13 +77,13 @@ fun! s:MakeMap(mapname,...)
    else
     let maplead= '\'
    endif
-   let s:mapleader= maplead
+   let g:Align_mapleader= maplead
   endif
 
   " allow users to set up their own mapnames
   let mapname= (a:0)? a:1 : a:mapname
-  exe "nmap <unique> ".s:mapleader.mapname."	<Plug>AM_".a:mapname
-  exe "xmap <silent> ".s:mapleader.mapname.'	:call AlignMaps#Vis("'.mapname.'")'."<cr>"
+  exe "nmap <unique> ".g:Align_mapleader.mapname."	<Plug>AM_".a:mapname
+  exe "xmap <silent> ".g:Align_mapleader.mapname.'	:call AlignMaps#Vis("'.mapname.'")'."<cr>"
 endfun
 
 " ---------------------------------------------------------------------
@@ -241,38 +241,36 @@ if has("menu") && has("gui_running") && &go =~# 'm' && !exists("s:firstmenu")
   let g:DrChipTopLvlMenu= "DrChip."
  endif
  if g:DrChipTopLvlMenu != ""
-  let s:mapleader = exists("g:mapleader")? g:mapleader : '\'
-  let s:emapleader= escape(s:mapleader,'\ ')
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.<<\ and\ >><tab>'.s:emapleader.'a<	'.s:mapleader.'a<'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Assignment\ =<tab>'.s:emapleader.'t=	'.s:mapleader.'t='
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Assignment\ :=<tab>'.s:emapleader.'a=	'.s:mapleader.'a='
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Backslashes<tab>'.s:emapleader.'tml	'.s:mapleader.'tml'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Breakup\ Comma\ Declarations<tab>'.s:emapleader.'a,	'.s:mapleader.'a,'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.C\ Comment\ Box<tab>'.s:emapleader.'abox	'.s:mapleader.'abox'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Commas<tab>'.s:emapleader.'t,	'.s:mapleader.'t,'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Commas<tab>'.s:emapleader.'ts,	'.s:mapleader.'ts,'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Commas\ With\ Strings<tab>'.s:emapleader.'tsq	'.s:mapleader.'tsq'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Comments<tab>'.s:emapleader.'acom	'.s:mapleader.'acom'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Comments\ Only<tab>'.s:emapleader.'aocom	'.s:mapleader.'aocom'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Declaration\ Comments<tab>'.s:emapleader.'adcom	'.s:mapleader.'adcom'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Declarations<tab>'.s:emapleader.'adec	'.s:mapleader.'adec'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Definitions<tab>'.s:emapleader.'adef	'.s:mapleader.'adef'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Function\ Header<tab>'.s:emapleader.'afnc	'.s:mapleader.'afnc'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Html\ Tables<tab>'.s:emapleader.'Htd	'.s:mapleader.'Htd'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.(\.\.\.)?\.\.\.\ :\ \.\.\.<tab>'.s:emapleader.'a?	'.s:mapleader.'a?'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Numbers<tab>'.s:emapleader.'anum	'.s:mapleader.'anum'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Numbers\ (American-Style)<tab>'.s:emapleader.'aunum	<Leader>aunum	'.s:mapleader.'aunum	<Leader>aunum'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Numbers\ (Euro-Style)<tab>'.s:emapleader.'aenum	'.s:mapleader.'aenum'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Spaces\ (Left\ Justified)<tab>'.s:emapleader.'tsp	'.s:mapleader.'tsp'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Spaces\ (Right\ Justified)<tab>'.s:emapleader.'Tsp	'.s:mapleader.'Tsp'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Statements\ With\ Percent\ Style\ Comments<tab>'.s:emapleader.'m=	'.s:mapleader.'m='
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Symbol\ <<tab>'.s:emapleader.'t<	'.s:mapleader.'t<'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Symbol\ \|<tab>'.s:emapleader.'tbar	'.s:mapleader.'tbar'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Symbol\ @<tab>'.s:emapleader.'t@	'.s:mapleader.'t@'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Symbol\ #<tab>'.s:emapleader.'t#	'.s:mapleader.'t#'
-  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Tabs<tab>'.s:emapleader.'tab	'.s:mapleader.'tab'
-  unlet s:mapleader
-  unlet s:emapleader
+  let g:Align_mapleader = exists("g:mapleader")? g:mapleader : '\'
+  let s:emapleader= escape(g:Align_mapleader,'\ ')
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.<<\ and\ >><tab>'.s:emapleader.'a<	'.g:Align_mapleader.'a<'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Assignment\ =<tab>'.s:emapleader.'t=	'.g:Align_mapleader.'t='
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Assignment\ :=<tab>'.s:emapleader.'a=	'.g:Align_mapleader.'a='
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Backslashes<tab>'.s:emapleader.'tml	'.g:Align_mapleader.'tml'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Breakup\ Comma\ Declarations<tab>'.s:emapleader.'a,	'.g:Align_mapleader.'a,'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.C\ Comment\ Box<tab>'.s:emapleader.'abox	'.g:Align_mapleader.'abox'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Commas<tab>'.s:emapleader.'t,	'.g:Align_mapleader.'t,'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Commas<tab>'.s:emapleader.'ts,	'.g:Align_mapleader.'ts,'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Commas\ With\ Strings<tab>'.s:emapleader.'tsq	'.g:Align_mapleader.'tsq'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Comments<tab>'.s:emapleader.'acom	'.g:Align_mapleader.'acom'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Comments\ Only<tab>'.s:emapleader.'aocom	'.g:Align_mapleader.'aocom'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Declaration\ Comments<tab>'.s:emapleader.'adcom	'.g:Align_mapleader.'adcom'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Declarations<tab>'.s:emapleader.'adec	'.g:Align_mapleader.'adec'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Definitions<tab>'.s:emapleader.'adef	'.g:Align_mapleader.'adef'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Function\ Header<tab>'.s:emapleader.'afnc	'.g:Align_mapleader.'afnc'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Html\ Tables<tab>'.s:emapleader.'Htd	'.g:Align_mapleader.'Htd'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.(\.\.\.)?\.\.\.\ :\ \.\.\.<tab>'.s:emapleader.'a?	'.g:Align_mapleader.'a?'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Numbers<tab>'.s:emapleader.'anum	'.g:Align_mapleader.'anum'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Numbers\ (American-Style)<tab>'.s:emapleader.'aunum	<Leader>aunum	'.g:Align_mapleader.'aunum	<Leader>aunum'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Numbers\ (Euro-Style)<tab>'.s:emapleader.'aenum	'.g:Align_mapleader.'aenum'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Spaces\ (Left\ Justified)<tab>'.s:emapleader.'tsp	'.g:Align_mapleader.'tsp'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Spaces\ (Right\ Justified)<tab>'.s:emapleader.'Tsp	'.g:Align_mapleader.'Tsp'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Statements\ With\ Percent\ Style\ Comments<tab>'.s:emapleader.'m=	'.g:Align_mapleader.'m='
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Symbol\ <<tab>'.s:emapleader.'t<	'.g:Align_mapleader.'t<'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Symbol\ \|<tab>'.s:emapleader.'tbar	'.g:Align_mapleader.'tbar'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Symbol\ @<tab>'.s:emapleader.'t@	'.g:Align_mapleader.'t@'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Symbol\ #<tab>'.s:emapleader.'t#	'.g:Align_mapleader.'t#'
+  exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Tabs<tab>'.s:emapleader.'tab	'.g:Align_mapleader.'tab'
  endif
 endif
 
