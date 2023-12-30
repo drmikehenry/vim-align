@@ -412,7 +412,7 @@ fun! AlignMaps#Vis(nmapname) range
   ka
   exe a:lastline
 
-"  call Decho("exe norm ".maplead.a:nmapname)
+"  call Decho("exe norm ".g:Align_mapleader.a:nmapname)
   exe " norm ".g:Align_mapleader.a:nmapname
 
   call RestoreMark(amark)
