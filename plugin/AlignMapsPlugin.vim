@@ -82,8 +82,10 @@ fun! s:MakeMap(mapname,...)
 
   " allow users to set up their own mapnames
   let mapname= (a:0)? a:1 : a:mapname
-  exe "nmap <unique> ".g:Align_mapleader.mapname."	<Plug>AM_".a:mapname
-  exe "xmap <silent> ".g:Align_mapleader.mapname.'	:call AlignMaps#Vis("'.mapname.'")'."<cr>"
+  " A literal `|` must be converted to `<Bar>` for the `*map` commands.
+  let mapleader = substitute(g:Align_mapleader, '|', '<Bar>', '')
+  exe "nmap <unique> ".mapleader.mapname."	<Plug>AM_".a:mapname
+  exe "xmap <silent> ".mapleader.mapname.'	:call AlignMaps#Vis("'.mapname.'")'."<cr>"
 endfun
 
 " ---------------------------------------------------------------------
