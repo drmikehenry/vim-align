@@ -412,17 +412,6 @@ fun! AlignMaps#Vis(nmapname) range
   ka
   exe a:lastline
 
-  if !exists("g:Align_mapleader")
-   if exists("g:maplocalleader")
-    let maplead= g:maplocalleader
-   elseif exists("g:mapleader")
-    let maplead= g:mapleader
-   else
-    let maplead= '\'
-   endif
-   let g:Align_mapleader= maplead
-  endif
-
 "  call Decho("exe norm ".maplead.a:nmapname)
   exe " norm ".g:Align_mapleader.a:nmapname
 

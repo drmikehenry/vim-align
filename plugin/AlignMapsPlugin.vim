@@ -65,20 +65,20 @@ if !hasmapto('<Plug>WrapperEnd')
 endif
 nnoremap <silent> <script> <Plug>AlignMapsWrapperEnd	:call AlignMaps#WrapperEnd()<CR>:set nolz<CR>
 
+if !exists("g:Align_mapleader")
+ if exists("g:maplocalleader")
+  let maplead= g:maplocalleader
+ elseif exists("g:mapleader")
+  let maplead= g:mapleader
+ else
+  let maplead= '\'
+ endif
+ let g:Align_mapleader= maplead
+endif
+
 " ---------------------------------------------------------------------
 " s:MakeMap: make both a normal-mode and a visual mode map for mapname {{{2
 fun! s:MakeMap(mapname,...)
-
-  if !exists("g:Align_mapleader")
-   if exists("g:maplocalleader")
-    let maplead= g:maplocalleader
-   elseif exists("g:mapleader")
-    let maplead= g:mapleader
-   else
-    let maplead= '\'
-   endif
-   let g:Align_mapleader= maplead
-  endif
 
   " allow users to set up their own mapnames
   let mapname= (a:0)? a:1 : a:mapname
@@ -241,7 +241,6 @@ if has("menu") && has("gui_running") && &go =~# 'm' && !exists("s:firstmenu")
   let g:DrChipTopLvlMenu= "DrChip."
  endif
  if g:DrChipTopLvlMenu != ""
-  let g:Align_mapleader = exists("g:mapleader")? g:mapleader : '\'
   let s:emapleader= escape(g:Align_mapleader,'\ ')
   exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.<<\ and\ >><tab>'.s:emapleader.'a<	'.g:Align_mapleader.'a<'
   exe 'menu '.g:DrChipTopLvlMenu.'AlignMaps.Assignment\ =<tab>'.s:emapleader.'t=	'.g:Align_mapleader.'t='
